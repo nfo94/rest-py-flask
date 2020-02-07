@@ -1,10 +1,31 @@
-##### Python REST API with Flask
+#### Python REST API with Flask and SQLite
 
-1. Activate virtual environment
-`pipenv shell`
+1. Create and activate virtual environment with Python 3.7
+
+```python
+virtualenv -p python3.7 venv
+```
+
 2. Install dependencies
-`pipenv install`
+
+```python
+pip install -r requirements.txt
+```
+
 3. Run app.py
-`python app.py`
-4. Check port 5000
-`http://127.0.0.1:5000/`
+
+```python
+python app.py
+```
+
+#### A philosophers looks like this:
+
+```json
+{
+    "id": 94839485,
+    "name": "Jeremy Bentham",
+    "reviews": 3.6
+}
+```
+
+Use a tool like Insomnia or Postman to hit the endpoints and test it.
