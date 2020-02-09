@@ -18,7 +18,7 @@ pip install -r requirements.txt
 python app.py
 ```
 
-#### A philosophers looks like this:
+#### A philosopher looks like this:
 
 ```json
 {

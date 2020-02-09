@@ -4,21 +4,28 @@ from models.philosopher import PhilosopherModel
 
 class Philosophers(Resource):
     def get(self):
-        return {'philosophers': [philosopher.json() for philosopher in PhilosopherModel.query.all()]}
+        return {'philosophers': [philosopher.json() for philosopher in
+                                 PhilosopherModel.query.all()]}
 
 
 class Philosopher(Resource):
     arguments = reqparse.RequestParser()
-    arguments.add_argument('name')
-    arguments.add_argument('reviews')
+    arguments.add_argument('name', type=str, required=True,
+                           help="Cannot leave this field empty")
+    arguments.add_argument('reviews', type=int, required=True,
+                           help="Cannot leave this field empty")
 
     def post(self, id):
         if PhilosopherModel.find_philosopher(id):
-            return {'message': 'Philosopher id {} already exists.'.format(id)}, 400
+            return {'message':
+                    'Philosopher id {} already exists.'.format(id)}, 400
 
         data = Philosopher.arguments.parse_args()
         new_philosopher = PhilosopherModel(id, **data)
-        new_philosopher.save_philosopher()
+        try:
+            new_philosopher.save_philosopher()
+        except:
+            return {'message': 'An error ocurred'}, 500
 
         return new_philosopher.json()
 
@@ -40,14 +47,20 @@ class Philosopher(Resource):
             return found_philosopher.json(), 200
 
         philosopher = PhilosopherModel(id, **data)
-        philosopher.save_philosopher()
+        try:
+            philosopher.save_philosopher()
+        except:
+            return {'message': 'An error ocurred'}, 500
 
         return philosopher.json(), 201
 
     def delete(self, id):
         philosopher = PhilosopherModel.find_philosopher(id)
         if philosopher:
-            philosopher.delete_philosopher()
-            return {'message': 'Philosopher deleted'}
+            try:
+                philosopher.delete_philosopher()
+                return {'message': 'Philosopher deleted'}
+            except:
+                return {'message': 'An error ocurred'}, 500
 
         return {'message': 'Philosopher not found'}, 404
