@@ -19,39 +19,32 @@ class Philosopher(Resource):
         if PhilosopherModel.find_philosopher(id):
             return {'message':
                     'Philosopher id {} already exists.'.format(id)}, 400
-
         data = Philosopher.arguments.parse_args()
         new_philosopher = PhilosopherModel(id, **data)
         try:
             new_philosopher.save_philosopher()
         except:
             return {'message': 'An error ocurred'}, 500
-
         return new_philosopher.json()
 
     def get(self, id):
         philosopher = PhilosopherModel.find_philosopher(id)
-
         if philosopher:
             return philosopher.json()
-
         return {'message': 'Philosopher not found'}, 404
 
     def put(self, id):
         data = Philosopher.arguments.parse_args()
-
         found_philosopher = PhilosopherModel.find_philosopher(id)
         if found_philosopher:
             found_philosopher.update_philosopher(**data)
             found_philosopher.save_philosopher()
             return found_philosopher.json(), 200
-
         philosopher = PhilosopherModel(id, **data)
         try:
             philosopher.save_philosopher()
         except:
             return {'message': 'An error ocurred'}, 500
-
         return philosopher.json(), 201
 
     def delete(self, id):
@@ -62,5 +55,4 @@ class Philosopher(Resource):
                 return {'message': 'Philosopher deleted'}
             except:
                 return {'message': 'An error ocurred'}, 500
-
         return {'message': 'Philosopher not found'}, 404

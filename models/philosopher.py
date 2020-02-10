@@ -3,7 +3,6 @@ from sql_alchemy import database
 
 class PhilosopherModel(database.Model):
     __tablename__ = 'philosophers'
-
     id = database.Column(database.Integer, primary_key=True)
     name = database.Column(database.String(50))
     reviews = database.Column(database.Float(precision=2))

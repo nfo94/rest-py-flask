@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_restful import Api
 from resources.philosopher import Philosophers, Philosopher
+from resources.user import User, UserRegister
 
 app = Flask(__name__)
 
@@ -17,6 +18,8 @@ def create_database():
 
 api.add_resource(Philosophers, '/philosophers')
 api.add_resource(Philosopher, '/philosophers/<string:id>')
+api.add_resource(User, '/user/<int:user_id>')
+api.add_resource(UserRegister, '/signup')
 
 if __name__ == '__main__':
     from sql_alchemy import database
