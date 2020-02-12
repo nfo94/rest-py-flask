@@ -1,5 +1,6 @@
 from flask_restful import Resource, reqparse
 from models.philosopher import PhilosopherModel
+from flask_jwt_extended import jwt_required
 
 
 class Philosophers(Resource):
@@ -15,6 +16,7 @@ class Philosopher(Resource):
     arguments.add_argument('reviews', type=int, required=True,
                            help="Cannot leave this field empty")
 
+    @jwt_required
     def post(self, id):
         if PhilosopherModel.find_philosopher(id):
             return {'message':
@@ -33,6 +35,7 @@ class Philosopher(Resource):
             return philosopher.json()
         return {'message': 'Philosopher not found'}, 404
 
+    @jwt_required
     def put(self, id):
         data = Philosopher.arguments.parse_args()
         found_philosopher = PhilosopherModel.find_philosopher(id)
@@ -47,6 +50,7 @@ class Philosopher(Resource):
             return {'message': 'An error ocurred'}, 500
         return philosopher.json(), 201
 
+    @jwt_required
     def delete(self, id):
         philosopher = PhilosopherModel.find_philosopher(id)
         if philosopher:
