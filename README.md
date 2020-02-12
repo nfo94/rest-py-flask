@@ -1,4 +1,4 @@
-#### Python REST API with Flask and SQLite
+#### Python REST API with Flask, SQLite and JWT
 
 1. Create and activate virtual environment with Python 3.7
 
