@@ -26,7 +26,7 @@ class User(Resource):
             try:
                 user.delete_user()
                 return {'message': 'User deleted'}
-            except:
+            except Exception:
                 return {'message': 'An error ocurred'}, 500
         return {'message': 'User not found'}, 404
 

@@ -25,7 +25,7 @@ class Philosopher(Resource):
         new_philosopher = PhilosopherModel(id, **data)
         try:
             new_philosopher.save_philosopher()
-        except:
+        except Exception:
             return {'message': 'An error ocurred'}, 500
         return new_philosopher.json()
 
@@ -46,7 +46,7 @@ class Philosopher(Resource):
         philosopher = PhilosopherModel(id, **data)
         try:
             philosopher.save_philosopher()
-        except:
+        except Exception:
             return {'message': 'An error ocurred'}, 500
         return philosopher.json(), 201
 
@@ -57,6 +57,6 @@ class Philosopher(Resource):
             try:
                 philosopher.delete_philosopher()
                 return {'message': 'Philosopher deleted'}
-            except:
+            except Exception:
                 return {'message': 'An error ocurred'}, 500
         return {'message': 'Philosopher not found'}, 404
